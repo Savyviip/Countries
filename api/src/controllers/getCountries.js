@@ -1,25 +1,22 @@
 // LLAMO A TODOS LOS PAISES Y TAMBIEN POR NOMBRE
 
-const { Activity, Country } = require('../db');
+const { Activities, Country } = require('../db');
 const { Op } = require("sequelize");
 
 const getCountries = async (req, res) => {
-    const name = req.query.name;
+    let name = req.query.name;
+    //el name lo compara con todos los paises
     if (name) {
+        name = name.toLowerCase()
 
         try {
-            const country = await Country.findAll({
-                where: {
-                    name: {
-                        [Op.iLike]: `%${name}%` // Utilizamos Op.iLike para realizar una búsqueda case-insensitive y parcial
-                    }
-                }
-            });
-
+            let country = await Country.findAll(
+                // [Op.iLike]: `%${name}%` // Utilizamos Op.iLike para realizar una búsqueda case-insensitive y parcial
+            );
+            country = country.filter((c) => c.name.toLowerCase().includes(name))
             if (country.length === 0) {
                 return res.status(404).json({ message: 'No se encontraron países.' });
             }
-
             return res.json(country);
         } catch (error) {
             console.error('Error al buscar países:', error);
@@ -29,7 +26,7 @@ const getCountries = async (req, res) => {
     } else {
 
         const DataCountries = await Country.findAll({
-            // include: [{model: Activity, attributes:["name"],
+            // include: [{model: Activities, attributes:["name"],
             // through: {attributes: []}}]
         });
         res.status(200).json(DataCountries);

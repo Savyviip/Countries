@@ -1,5 +1,8 @@
-// const {Activity} = require('../db');
+const { Activities } = require('../db');
 
-// const getActivities = async() => await Activity.findAll();
+const getActivities = async (req, res) => {
+    const actividades = await Activities.findAll();
+    return res.status(200).json(actividades);
+}
 
-// module.exports = getActivities;
+module.exports = getActivities;

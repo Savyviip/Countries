@@ -1,4 +1,4 @@
-const { Country, Activity } = require("../db");
+const { Country, Activities } = require("../db");
 
 const getCountryById = async (req, res) => {
     const { id } = req.params;
@@ -7,7 +7,7 @@ const getCountryById = async (req, res) => {
         const IdPais = id.toUpperCase();
         const country = await Country.findOne({
             where: { id: IdPais },
-            include: Activity,
+            include: Activities,
         });
         if (country) return res.status(200).json(country);
         else return res.status(400).send("Pais inexistente");
