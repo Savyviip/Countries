@@ -1,0 +1,62 @@
+.allContainer {
+    display: flex;
+    justify-content: center;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.432);
+    width: 30%;
+    padding: 1em;
+    border-radius: 20px;
+    box-shadow: 3px 2px 5px 1px rgba(255, 255, 255, 0.81);
+    text-shadow: 6px 4px 7px rgba(243, 241, 124, 0.932);
+    margin-bottom: 2em;
+
+
+}
+
+.button {
+    border-radius: 2rem;
+    scale: 3;
+    background-color: white;
+}
+
+.button:hover {
+    border-color: blue;
+    box-shadow: 3px 2px 5px 1px rgba(13, 17, 243, 0.555);
+    color: blue;
+
+}
+
+.conteinerButton {
+    padding-top: 20rem;
+}
+
+select {
+    border-radius: 2rem;
+    background-color: rgba(255, 255, 255, 0.637);
+    box-shadow: 3px 2px 5px 1px rgba(255, 255, 255, 0.81);
+    text-shadow: 6px 4px 7px rgba(243, 241, 124, 0.932);
+    color: rgb(0, 0, 0);
+}
+
+.difficulty,
+.hours {
+    scale: 150%;
+    color: white;
+    text-shadow: 2px 2px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black;
+    padding-bottom: 1rem;
+    padding-top: 2rem;
+}
+
+
+select {
+    scale: 150%;
+
+}

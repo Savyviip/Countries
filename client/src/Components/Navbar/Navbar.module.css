@@ -1,0 +1,27 @@
+.nav {
+    background-color: rgb(234, 234, 243);
+    box-shadow: 1px 10px 10px rgb(174, 174, 246);
+    border: solid 2px rgb(75, 106, 220);
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-left: 5%;
+    padding-right: 5%;
+    height: 3.5rem;
+    margin: 5px;
+    border-radius: 10px 4px 4px;
+    font-size: larger;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: brown;
+}
+
+.home {
+    font-size: x-large;
+    text-decoration: none;
+    padding-right: 2rem;
+}
+
+.form {
+    font-size: x-large;
+    text-decoration: none;
+}

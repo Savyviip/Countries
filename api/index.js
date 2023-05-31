@@ -19,10 +19,15 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
+const loadAPI = require('./src/handlers/loadCountryApi.js');
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
+conn.sync({force: true}).then( async() => { // la conexion con la base de datos
+  console.log('Database connected'); 
+
+  await loadAPI();
+
+  server.listen(3001, () => { // servidor ON
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 });

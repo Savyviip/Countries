@@ -1,0 +1,28 @@
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin: 0; */
+    /* background-size: cover;
+    background-attachment: fixed; */
+}
+.containerButton {
+    position: absolute;
+}
+
+.button {
+    background-color: rgba(0, 0, 0, 0.588);
+    color: aliceblue;
+    scale: 220%;
+    border-radius: 3rem;
+    margin-bottom: 30rem;
+}
+
+.img {
+    background: linear-gradient(rgb(5, 13, 32, 0.75), rgba(5, 7, 12, 0.75)),
+    url(https://wallpaperaccess.com/full/352355.jpg) no-repeat center;
+    display: block;
+    width: 100%;
+    height: auto;
+}
