@@ -9,6 +9,7 @@ import Navbar from './Components/Navbar/Navbar';
 import Form from './Components/Form/Form';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Detail from './Components/Detail/Detail';
 // import Nav from './Components/Navbar/Nav';
 
 
@@ -28,9 +29,9 @@ function App() {
         <Route patch='/' element={<Navbar></Navbar>}></Route>
         <Route path='/' element={<Landing></Landing>}> </Route>
         <Route path='/home' element={<Cards></Cards>}></Route>
-        {/* <Route path="/home" component={CustomButton}
-        <Route path='/detail/:id' element={<Detail />} /> */}
-        <Route path='/form' element={<Form />} />
+        {/* cuando se haga click, se renderiza, eso lo que hace ()=> */}
+        <Route exact path="/detail/:id" element={<Detail />} />
+        <Route exact path='/form' element={<Form />} />
       </Routes>
 
       {/* pais={paises} onClose={onClose} */}

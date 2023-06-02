@@ -1,9 +1,11 @@
-import { ADD_COUNTRIES, FILTER, } from "./action";
+import { ADD_COUNTRIES, FILTER, ID_COUNTRIES, SEARCH_COUNTRIES } from "./action";
 
 const initialState = {
     countries: [], // mostramos todos los paises
-    Fill: false,
+    searchCountries: [],
     CountriesFill: [], // mostramos todos los paises pero filtrado
+    countryForId: [],
+    Fill: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -23,6 +25,21 @@ const reducer = (state = initialState, action) => {
                     })
                 }
             }
+
+        case SEARCH_COUNTRIES:
+            return {
+                ...state, Fill: true, searchCountries: action.payload  // La propiedad fill es true cuando filtro un dato, sino trae todos los paises, 
+            };
+
+        case ID_COUNTRIES:
+            return {
+                ...state, countryForId: action.payload
+            };
+
+        // linea 30 tanto searchCountries como linea 5 se llaman igual
+
+
+
 
 
 

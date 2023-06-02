@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Card from './Card/Card.jsx';
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries } from "../Redux/action";
+import { getCountries, searchCountries } from "../Redux/action";
 import style from './Cards.module.css';
 
 export default function Cards() {
@@ -9,6 +9,10 @@ export default function Cards() {
   const fill = useSelector((state) => state.fill);
   const dispatch = useDispatch();
   const countries = useSelector(state => state.countries);
+  const Search = useSelector(state => state.searchCountries); // El resultado del despacho, de la funcion.
+  const [filter, setFilter] = useState(fill);
+
+
 
   const itemsPerPage = 10; // Número de elementos por página
   const totalPages = Math.ceil(countries.length / itemsPerPage); // Cálculo del número total de páginas
@@ -16,6 +20,7 @@ export default function Cards() {
 
   useEffect(() => {
     dispatch(getCountries());
+    setFilter(false)
   }, []);
 
   const handlePageChange = (page) => {
@@ -46,6 +51,13 @@ export default function Cards() {
     return pageNumbers;
   };
 
+  //creamos una funcion con un evento y esa funcion va a tener un dispatch hacia searchCountries.
+  // esa funcion va a onChangeSearch LINEA 63, de un input
+  const handlerSearch = (event) => {
+    setFilter(true)
+    dispatch(searchCountries(event.target.value))
+  }
+
   // Lógica para obtener los elementos a mostrar en la página actual
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -53,8 +65,20 @@ export default function Cards() {
 
   return (
     <div className={style.container}>
+      {/* tambien puedo ponerle un boton haciendole onClick={handlerSearch}  onChange hace filtrado de lo que me trae  */}
+      <input type="text" onChange={handlerSearch} />
       <div className={style.cards}>
-        {countriesToShow.map(country =>
+        
+        {filter ? Search.map(country =>
+          <Card
+            key={country.id}
+            id={country.id}
+            flag={country.flag}
+            name={country.name}
+            continent={country.continent}
+          />
+
+        ) : countriesToShow.map(country =>
           <Card
             key={country.id}
             id={country.id}
@@ -63,6 +87,7 @@ export default function Cards() {
             continent={country.continent}
           />
         )}
+
       </div>
       <div className={style.pagination}>
         <button

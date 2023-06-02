@@ -1,4 +1,3 @@
-import SearchBar from "./SearchBar";
 import React from "react";
 import style from "./Navbar.module.css";
 import { Link } from "react-router-dom";
