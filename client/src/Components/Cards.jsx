@@ -1,25 +1,29 @@
 import { useEffect, useState } from 'react';
 import Card from './Card/Card.jsx';
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries, searchCountries } from "../Redux/action";
+import { getCountries, searchCountries, Filter, GetActivities } from "../Redux/action";
 import style from './Cards.module.css';
 
 export default function Cards() {
-  const countryfill = useSelector((state) => state.countryfill);
   const fill = useSelector((state) => state.fill);
+  const FilterCountry = useSelector(state => state.CountriesFill)
+  const activitiesList = useSelector(state => state.activity)
   const dispatch = useDispatch();
   const countries = useSelector(state => state.countries);
   const Search = useSelector(state => state.searchCountries); // El resultado del despacho, de la funcion.
   const [filter, setFilter] = useState(fill);
 
-
-
   const itemsPerPage = 10; // Número de elementos por página
   const totalPages = Math.ceil(countries.length / itemsPerPage); // Cálculo del número total de páginas
   const [currentPage, setCurrentPage] = useState(1); // Página actual
+  const [fillAsc, setFillAsc] = useState(false); // estado que controla la vista de ascendente
+  const [fillDes, setFillDes] = useState(false); // estado que controla la vista de descendente
+  const [fillCont, setFillCont] = useState(false);
+
 
   useEffect(() => {
     dispatch(getCountries());
+    dispatch(GetActivities());
     setFilter(false)
   }, []);
 
@@ -58,6 +62,40 @@ export default function Cards() {
     dispatch(searchCountries(event.target.value))
   }
 
+  const OrderCountry = (event) => {
+    if (event.target.value === "a") {
+      dispatch(Filter(event.target.value))
+      setFillAsc(true);
+      setFilter(false);
+    }
+    if (event.target.value === "d") {
+      dispatch(Filter(event.target.value))
+      setFillAsc(false);
+      setFilter(false);
+      setFillDes(true);
+    }
+    if (event.target.value === "population-A") {
+      dispatch(Filter(event.target.value))
+      setFillAsc(false);
+      setFilter(false);
+      setFillDes(false);
+    }
+    if (event.target.value === "population-B") {
+      dispatch(Filter(event.target.value))
+      setFillAsc(false);
+      setFilter(false);
+      setFillDes(true);
+    }
+  }
+  //Si ingresa numeros, ingresa al if
+  const fillContinent = (event) => {
+    if (isNaN(event.target.value)) {
+      dispatch(Filter(event.target.value))
+      setFilter(false);
+      setFillCont(true);
+    }
+  }
+
   // Lógica para obtener los elementos a mostrar en la página actual
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -67,8 +105,36 @@ export default function Cards() {
     <div className={style.container}>
       {/* tambien puedo ponerle un boton haciendole onClick={handlerSearch}  onChange hace filtrado de lo que me trae  */}
       <input type="text" onChange={handlerSearch} />
+
+      {/* Ordenamiento ascendente, descendente */}
+      <select onChange={OrderCountry}>
+        <option>(+)/(-)</option>
+        <option value="a">Country (+)</option>
+        <option value="d">Country (-)</option>
+        <option value="population-A">Population (+)</option>
+        <option value="population-B">Population (-)</option>
+      </select>
+
+      <select onChange={fillContinent}>
+        <option>Continent</option>
+        <option value="Africa">Africa (+)</option>
+        <option value="South America">South America (-)</option>
+        <option value="Asia">Asia (+)</option>
+        <option value="North America">North America (-)</option>
+        <option value="Europe">Europe (+)</option>
+        <option value="Oceania">Oceania (-)</option>
+      </select>
+
+      <select onChange={GetActivities}>
+        <option>Activity</option>
+        {activitiesList?.map((element, index) => {
+          return
+          <option key={index} value={element.name}>{element.name}</option>
+        })}
+      </select>
+
       <div className={style.cards}>
-        
+
         {filter ? Search.map(country =>
           <Card
             key={country.id}
@@ -78,6 +144,30 @@ export default function Cards() {
             continent={country.continent}
           />
 
+        ) : fillAsc ? FilterCountry.map(country =>
+          <Card
+            key={country.id}
+            id={country.id}
+            flag={country.flag}
+            name={country.name}
+            continent={country.continent}
+          />
+        ) : fillDes ? FilterCountry.map(country =>
+          <Card
+            key={country.id}
+            id={country.id}
+            flag={country.flag}
+            name={country.name}
+            continent={country.continent}
+          />
+        ) : fillCont ? FilterCountry.map(country =>
+          <Card
+            key={country.id}
+            id={country.id}
+            flag={country.flag}
+            name={country.name}
+            continent={country.continent}
+          />
         ) : countriesToShow.map(country =>
           <Card
             key={country.id}

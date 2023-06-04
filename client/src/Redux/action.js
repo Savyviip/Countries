@@ -3,7 +3,8 @@ import axios from "axios";
 export const SEARCH_COUNTRIES = "SEARCH_COUNTRIES"  // type: es lo verde
 export const ADD_COUNTRIES = "ADD_COUNTRIES";
 export const FILTER = "FILTER";
-export const ID_COUNTRIES ="ID_COUNTRIES";
+export const ID_COUNTRIES = "ID_COUNTRIES";
+export const GET_ACTIVITIES = "GET_ACTIVITIES";
 
 // Le hace la peticion al GET que retorna todos los paises
 export const getCountries = () => {
@@ -44,11 +45,20 @@ export const countryForId = (id) => {
     };
 }
 
-
-
 export const Filter = (ct) => {
     return {
         type: FILTER,
         payload: ct,
+    }
+}
+
+export const GetActivities = () => {
+    return async function (dispatch) {
+        const activities = await axios.get("http://localhost:3001/activities");
+        dispatch({
+            type: GET_ACTIVITIES,
+            payload: activities.data,
+        })
+
     }
 }
