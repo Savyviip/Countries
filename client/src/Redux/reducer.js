@@ -1,4 +1,4 @@
-import { ADD_COUNTRIES, FILTER, ID_COUNTRIES, SEARCH_COUNTRIES, GET_ACTIVITIES } from "./action";
+import { ADD_COUNTRIES, FILTER, ID_COUNTRIES, SEARCH_COUNTRIES, GET_ACTIVITIES, POST, FILTER_ACTIVITY } from "./action";
 
 const initialState = {
     countries: [], // mostramos todos los paises
@@ -7,6 +7,8 @@ const initialState = {
     countryForId: [],
     Fill: false,
     activity: [],
+    newActivity: [],
+    fillActivity: [],
 }
 
 const reducer = (state = initialState, action) => {
@@ -77,6 +79,28 @@ const reducer = (state = initialState, action) => {
                 ...state, activity: action.payload
             };
 
+        case POST:
+            return {
+                ...state, newActivity: action.payload
+            };
+
+
+        case FILTER_ACTIVITY:
+            if (state.countries.find(e => e.Activities.length !== 0 && e.Activities.includes(action.payload))) {
+                // let array = [],
+                // for ( let coun of state.activity){
+                //     if(coun.name===action.payload) {
+                //         array.push(coun.name)
+                //     }
+                // }
+
+
+                let resultado;
+                resultado = state.countries.filter(e => e.Activities.length > 0 && e.Activities.includes(action.payload))
+                return {
+                    ...state, Fill: true, fillActivity: resultado
+                }
+            }
         // linea 30 tanto searchCountries como linea 5 se llaman igual
 
 

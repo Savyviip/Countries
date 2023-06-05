@@ -5,6 +5,8 @@ export const ADD_COUNTRIES = "ADD_COUNTRIES";
 export const FILTER = "FILTER";
 export const ID_COUNTRIES = "ID_COUNTRIES";
 export const GET_ACTIVITIES = "GET_ACTIVITIES";
+export const POST = "POST";
+export const FILTER_ACTIVITY = "FILTER_ACTIVITY";
 
 // Le hace la peticion al GET que retorna todos los paises
 export const getCountries = () => {
@@ -59,6 +61,35 @@ export const GetActivities = () => {
             type: GET_ACTIVITIES,
             payload: activities.data,
         })
+    }
+}
 
+export const PostActivity = (post) => {
+    return async function (dispatch) {
+        try {
+            const newActivity = await axios.post('http://localhost:3001/activities', post)
+            dispatch({
+                type: POST,
+                payload: newActivity,
+            })
+            alert("Created Successfully")
+            document.getElementById("name").value = "";
+            document.getElementById("difficulty").value = 1;
+            document.getElementById("hours").value = 1;
+        } catch (error) {
+            alert(error.response.data.error)
+            document.getElementById("name").value = "";
+            document.getElementById("difficulty").value = 1;
+            document.getElementById("hours").value = 1;
+        }
+    }
+}
+
+export const FilterActivity = (act) => {
+    return function (dispatch) {
+        return dispatch({
+            type: FILTER_ACTIVITY,
+            payload: act,
+        })
     }
 }

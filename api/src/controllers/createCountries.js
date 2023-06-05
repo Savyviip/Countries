@@ -1,6 +1,6 @@
 // CARGA TODA LA INFORMACION EN LA TABLA DE LA BASE DE DATOS
 
-const { Country } = require('../db');
+const { Country, Activities } = require('../db');
 
 const createCountries = (array) => array.forEach(async (element) => // element es cada pais
 
@@ -14,7 +14,7 @@ const createCountries = (array) => array.forEach(async (element) => // element e
             subregion: element.subregion,
             area: element.area,
             population: element.population
-        }
+        },
     })
 );
 module.exports = createCountries;

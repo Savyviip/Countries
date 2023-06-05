@@ -3,6 +3,7 @@
 const { Activities, Country } = require('../db');
 const { Op } = require("sequelize");
 
+
 const getCountries = async (req, res) => {
     let name = req.query.name;
     //el name lo compara con todos los paises
@@ -25,11 +26,30 @@ const getCountries = async (req, res) => {
 
     } else {
 
-        const DataCountries = await Country.findAll({
-            // include: [{model: Activities, attributes:["name"],
-            // through: {attributes: []}}]
+        let DataCountries = await Country.findAll({
+            include: {
+                model: Activities,
+                attributes: ["name"],
+                through: {
+                    attributes: [],
+                }
+            }
         });
-        res.status(200).json(DataCountries);
+        const mapExtraerActivity = DataCountries.map(element => {
+            return {
+                id: element.id,
+                name: element.name,
+                flag: element.flag,
+                continent: element.continent,
+                capital: element.capital,
+                subregion: element.subregion,
+                area: element.area,
+                population: element.population,
+                Activities: element.Activities.map(e => e.name)
+            }
+        })
+
+        res.status(200).json(mapExtraerActivity);
     }
 }
 module.exports = getCountries;

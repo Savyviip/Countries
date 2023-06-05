@@ -19,9 +19,9 @@
     margin-bottom: 30rem;
 }
 
-.img {
-    background: linear-gradient(rgb(5, 13, 32, 0.75), rgba(5, 7, 12, 0.75)),
-    url(https://wallpaperaccess.com/full/352355.jpg) no-repeat center;
+.img { 
+    background: linear-gradient(rgba(5, 13, 32, 0.904), rgba(5, 7, 12, 0.658)),
+    url(https://wallpaperaccess.com/full/352355.jpg) no-repeat center;  
     display: block;
     width: 100%;
     height: auto;

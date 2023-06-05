@@ -58,5 +58,9 @@ select {
 
 select {
     scale: 150%;
+}
 
+.error {
+    color: red;
+    scale: 140%;
 }

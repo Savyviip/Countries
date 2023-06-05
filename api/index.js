@@ -22,8 +22,8 @@ const { conn } = require('./src/db.js');
 const loadAPI = require('./src/handlers/loadCountryApi.js');
 
 // Syncing all the models at once.
-conn.sync({force: true}).then( async() => { // la conexion con la base de datos
-  console.log('Database connected'); 
+conn.sync({ force: false }).then(async () => { // false, queda guardada en base de datos
+  console.log('Database connected');
 
   await loadAPI();
 

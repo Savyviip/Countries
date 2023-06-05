@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import Card from './Card/Card.jsx';
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries, searchCountries, Filter, GetActivities } from "../Redux/action";
+import { getCountries, searchCountries, Filter, GetActivities, FilterActivity } from "../Redux/action";
 import style from './Cards.module.css';
 
 export default function Cards() {
   const fill = useSelector((state) => state.fill);
   const FilterCountry = useSelector(state => state.CountriesFill)
+  const fillActivity = useSelector(state => state.fillActivity)
   const activitiesList = useSelector(state => state.activity)
   const dispatch = useDispatch();
   const countries = useSelector(state => state.countries);
@@ -19,7 +20,7 @@ export default function Cards() {
   const [fillAsc, setFillAsc] = useState(false); // estado que controla la vista de ascendente
   const [fillDes, setFillDes] = useState(false); // estado que controla la vista de descendente
   const [fillCont, setFillCont] = useState(false);
-
+  const [fillAct, setFillAct] = useState(false);
 
   useEffect(() => {
     dispatch(getCountries());
@@ -60,6 +61,16 @@ export default function Cards() {
   const handlerSearch = (event) => {
     setFilter(true)
     dispatch(searchCountries(event.target.value))
+  }
+
+  const FillHandlerActivity = (event) => {
+    // si es diferente, hago el dispatch
+    if (event.target.value !== "0") {
+      setFilter(false)
+      setFillAct(true)
+      dispatch(FilterActivity(event.target.value))
+
+    }
   }
 
   const OrderCountry = (event) => {
@@ -104,34 +115,39 @@ export default function Cards() {
   return (
     <div className={style.container}>
       {/* tambien puedo ponerle un boton haciendole onClick={handlerSearch}  onChange hace filtrado de lo que me trae  */}
+
+
       <input type="text" onChange={handlerSearch} />
-
+      <br />
       {/* Ordenamiento ascendente, descendente */}
-      <select onChange={OrderCountry}>
-        <option>(+)/(-)</option>
-        <option value="a">Country (+)</option>
-        <option value="d">Country (-)</option>
-        <option value="population-A">Population (+)</option>
-        <option value="population-B">Population (-)</option>
-      </select>
+      <div className={style.containerFilters2}>
+        <div className={style.containerFilters}>
+          <select onChange={OrderCountry}>
+            <option>(+)/(-)</option>
+            <option value="a">Country (+)</option>
+            <option value="d">Country (-)</option>
+            <option value="population-A">Population (+)</option>
+            <option value="population-B">Population (-)</option>
+          </select>
 
-      <select onChange={fillContinent}>
-        <option>Continent</option>
-        <option value="Africa">Africa (+)</option>
-        <option value="South America">South America (-)</option>
-        <option value="Asia">Asia (+)</option>
-        <option value="North America">North America (-)</option>
-        <option value="Europe">Europe (+)</option>
-        <option value="Oceania">Oceania (-)</option>
-      </select>
+          <select onChange={fillContinent}>
+            <option>Continent</option>
+            <option value="Africa">Africa (+)</option>
+            <option value="South America">South America (-)</option>
+            <option value="Asia">Asia (+)</option>
+            <option value="North America">North America (-)</option>
+            <option value="Europe">Europe (+)</option>
+            <option value="Oceania">Oceania (-)</option>
+          </select>
 
-      <select onChange={GetActivities}>
-        <option>Activity</option>
-        {activitiesList?.map((element, index) => {
-          return
-          <option key={index} value={element.name}>{element.name}</option>
-        })}
-      </select>
+          <select onChange={FillHandlerActivity}>
+            <option value="0">Activity</option>
+            {activitiesList?.map((element, index) => {
+              return <option key={index} value={element.name}>{element.name}</option>
+            })}
+          </select>
+        </div>
+      </div>
 
       <div className={style.cards}>
 
@@ -168,15 +184,24 @@ export default function Cards() {
             name={country.name}
             continent={country.continent}
           />
-        ) : countriesToShow.map(country =>
-          <Card
-            key={country.id}
-            id={country.id}
-            flag={country.flag}
-            name={country.name}
-            continent={country.continent}
-          />
-        )}
+        ) :
+          fillAct ? fillActivity.map(country =>
+            <Card
+              key={country.id}
+              id={country.id}
+              flag={country.flag}
+              name={country.name}
+              continent={country.continent}
+            />
+          ) : countriesToShow.map(country =>
+            <Card
+              key={country.id}
+              id={country.id}
+              flag={country.flag}
+              name={country.name}
+              continent={country.continent}
+            />
+          )}
 
       </div>
       <div className={style.pagination}>

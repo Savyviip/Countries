@@ -1,5 +1,5 @@
 .container {
-    background-color: rgba(0, 0, 0, 0.719);
+    background-color: rgba(0, 0, 0, 0.795);
     width: 20%;
     padding: 1em;
     border-radius: 20px;
@@ -27,4 +27,5 @@ h2 {
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 5px 10px 4px 0px rgba(0, 0, 0, 0.81);
+    border: 2px solid white;
 }

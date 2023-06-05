@@ -30,14 +30,14 @@ const Detail = () => {
 
   return (
     <div className={style.container}>
-      <p>{obj.name}</p>
+      <p ClassName={style.title}>{obj.name}</p>
       <img src={obj.flag} alt="flag" />
-      <p>id: {obj.id}</p>
-      <p>continent: {obj.continent}</p>
-      <p>capital: {obj.capital}</p>
-      <p>subregion: {obj.subregion}</p>
-      <p>area: {obj.area}</p>
-      <p>population: {obj.population}</p>
+      <p>Id: {obj.id}</p>
+      <p>Continent: {obj.continent}</p>
+      <p>Capital: {obj.capital}</p>
+      <p>Subregion: {obj.subregion}</p>
+      <p>Area: {obj.area}</p>
+      <p>Population: {obj.population}</p>
     </div>
   )
 }
